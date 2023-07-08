@@ -11,8 +11,7 @@ router.post('/signin', validateLogin, login);
 
 router.use('/users', userRouter);
 router.use('/movies', movieRouter);
-// Обработаем некорректный маршрут и вернём ошибку 404
-router.use('*', (req, res, next) => {
+router.use('*', (req, res, next) => { // Обработаем некорректный маршрут и вернём ошибку 404
   next(new NotFoundError(`${URL_NOT_FOUND} ${req.originalUrl} `));
 });
 

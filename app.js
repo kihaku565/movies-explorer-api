@@ -14,7 +14,7 @@ const { PORT = 3000, NODE_ENV, DATABASE_URL } = process.env;
 
 const app = express();
 
-app.use(requestLogger);
+app.use(requestLogger); // подключаем логгер запросов
 
 app.use(limiter); // подключаем rate-limiter
 
