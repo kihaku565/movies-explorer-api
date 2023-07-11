@@ -5,13 +5,13 @@ const UnauthorizedError = require('../errors/unauthorized-error');
 const { WRONG_EMAIL, WRONG_EMAIL_OR_PASSWORD } = require('../utils/constants');
 
 const userSchema = new mongoose.Schema({
-  name: {
+  name: { // имя пользователя
     type: String,
     required: true,
     minlength: 2,
     maxlength: 30,
   },
-  email: {
+  email: { // почта пользователя
     type: String,
     required: true,
     unique: true,
@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
       message: WRONG_EMAIL,
     },
   },
-  password: {
+  password: { // хеш пароля
     type: String,
     required: true,
     select: false, // с методом Create работать не будет, поэтому удалю в контроллере из ответа
@@ -33,13 +33,11 @@ userSchema.statics.findUserByCredentials = function findUserByCredentials({ emai
       if (!user) {
         return Promise.reject(new UnauthorizedError(WRONG_EMAIL_OR_PASSWORD));
       }
-
       return bcrypt.compare(password, user.password)
         .then((matched) => {
           if (!matched) {
             return Promise.reject(new UnauthorizedError(WRONG_EMAIL_OR_PASSWORD));
           }
-
           return user;
         });
     });

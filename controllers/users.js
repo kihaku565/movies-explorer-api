@@ -43,7 +43,9 @@ const createUser = (req, res, next) => {
   const { name, email, password } = req.body;
   bcrypt.hash(password, 10)
     .then((hash) => User.create({
-      name, email, password: hash,
+      name,
+      email,
+      password: hash,
     }))
     .then((user) => {
       const newUser = user.toObject();
@@ -64,6 +66,7 @@ const createUser = (req, res, next) => {
 // POST /signin аутентификация (вход)
 const login = (req, res, next) => {
   const { email, password } = req.body;
+
   User.findUserByCredentials({ email, password })
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : devJwtKey, { expiresIn: '7d' });

@@ -5,8 +5,7 @@ module.exports = (err, req, res, next) => {
   const { statusCode = ERROR_CODE_INTERNAL_SERVER_ERROR, message } = err;
   res
     .status(statusCode)
-    .send({
-      // проверяем статус и выставляем сообщение в зависимости от него
+    .send({ // проверяем статус и выставляем сообщение в зависимости от него
       message: statusCode === ERROR_CODE_INTERNAL_SERVER_ERROR
         ? SERVER_ERROR
         : message,
